@@ -2,7 +2,7 @@ import json
 import datetime
 
 try:
-    with open('workouts.json') as json_file:
+    with open('/Users/sebastian/PycharmProjects/PythonProject1/data/workouts.json') as json_file:
         workouts = json.load(json_file)
 except FileNotFoundError:
     workouts = []
@@ -95,7 +95,7 @@ def edit_workouts():
 
 
 def save_workouts():
-    with open('workouts.json', 'w') as outfile:
+    with open('/Users/sebastian/PycharmProjects/PythonProject1/data/workouts.json', 'w') as outfile:
         json.dump(workouts, outfile)
 
 def menu():
