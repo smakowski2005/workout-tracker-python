@@ -41,7 +41,7 @@ Clone the repository:
 
 ```bash
 
-git clone YOUR_REPOSITORY_LINK
+git clone https://github.com/smakowski2005/workout-tracker-python
 ```
 Run the application:
 ```
