@@ -8,41 +8,42 @@ def add_workout(workouts):
     ciezar=get_positive_int("ciezar: ")
     powtorzenia=get_positive_int("Powtorzenia: ")
     serie=get_positive_int("Serie: ")
-    godzina=datetime.datetime.now()
     workout={
+        "id": len(workouts)+1,
         "cwiczenie":cwiczenie,
         "ciezar":ciezar,
         "powtorzenia":powtorzenia,
         "serie":serie,
-        "godzina":godzina.strftime("%H:%M")
+        "data": datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     }
     workouts.append(workout)
-    save_workouts()
 def show_workouts(workouts):
     if not workouts:
         print("Nie ma takiego treningu.")
         return
     for x,workout in enumerate(workouts,start=1):
-        print(x)
+        print(
+            f'ID: {workout["id"]}'
+        )
         print(
             f'{workout["cwiczenie"]} |'
             f'{workout["ciezar"]} |'
             f'{workout["powtorzenia"]} |'
             f'{workout["serie"]} |'
-            f'{workout["godzina"]} |'
+            f'{workout["data"]} |'
         )
         print("--------")
 def delete_workout(workouts):
-    choice = int(input("Wybierz: "))-1
+    choice = int(input("Podaj ID treningu: "))-1
     if 0 <= choice < len(workouts):
-        workouts.pop(choice)
+        for workout in workouts:
+            if workouts[workout]["id"] == choice:
+                del workouts[workout]
     else:
         print("Nie ma takiego treningu.")
-    save_workouts()
 def edit_workouts(workouts):
     print("Ktory trening chcesz edytowac?")
     x = 0
-    godzina=datetime.datetime.now()
     for workout in workouts:
         x = x + 1
         print(x)
@@ -71,7 +72,23 @@ def edit_workouts(workouts):
             return
 
 
-        workouts[choice]["godzina"]=godzina.strftime("%H:%M")
+        workouts[choice]["data"]=datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
         workouts[choice][slowo] = nowy
-        save_workouts()
+def search_workouts(workouts):
+    text=input("Wyszukaj po nazwie: ")
+    value=True
+    for workout in workouts:
+        if text.lower() == workout["cwiczenie"].lower():
+            value = False
+            print(
+                f'ID: {workout["id"]}'
+            )
+            print(
+                f'{workout["cwiczenie"]} |'
+                f'{workout["ciezar"]} |'
+                f'{workout["powtorzenia"]} |'
+                f'{workout["serie"]} |'
+                f'{workout["data"]} |'
+            )
+    if value:print("Nie ma takiego treningu.")
 
