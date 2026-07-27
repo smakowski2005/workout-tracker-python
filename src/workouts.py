@@ -91,4 +91,21 @@ def search_workouts(workouts):
                 f'{workout["data"]} |'
             )
     if value:print("Nie ma takiego treningu.")
+def show_stats(workouts):
+    print("Liczba treningow: ",len(workouts))
+    max=workouts[0]["ciezar"]
+    ciezar=workouts[0]
+    for workout in workouts:
+        if workout["ciezar"] > max:
+            ciezar=workout
+    print(
+        f'Najwiekszy ciezar:'
+        f'{ciezar["cwiczenie"]}  {ciezar["ciezar"]}'
+    )
+    suma=0
+    for workout in workouts:
+        suma=suma+workout["serie"]
+    print("Laczna liczba serii: ",suma)
+
+
 

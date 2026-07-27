@@ -8,3 +8,4 @@ def get_positive_int(text):
             return value
         except ValueError:
             print("podana wartosc nie jest liczba")
+

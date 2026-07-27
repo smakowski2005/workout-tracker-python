@@ -1,5 +1,6 @@
 import workouts
 import storage
+import utils
 
 list=storage.load_workouts()
 
@@ -10,11 +11,12 @@ def menu():
     print("3. Usun trening")
     print("4. Edytuj trening")
     print("5. Wyszukaj trening")
-    print("6. Wyjdz")
+    print("6. Pokaz statystyki")
+    print("7. Wyjdz")
 
 while True:
     menu()
-    choice = int(input("Wybierz: "))
+    choice = utils.get_positive_int("Podaj liczbe: ")
     if choice == 1:
         workouts.add_workout(list)
         storage.save_workouts(list)
@@ -29,6 +31,8 @@ while True:
     elif choice == 5:
         workouts.search_workouts(list)
     elif choice == 6:
+        workouts.show_stats(list)
+    elif choice == 7:
         break
     else:
         print("Nie poprawne.")
