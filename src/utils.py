@@ -9,3 +9,5 @@ def get_positive_int(text):
         except ValueError:
             print("podana wartosc nie jest liczba")
 
+def is_positive(number):
+    return number > 0
