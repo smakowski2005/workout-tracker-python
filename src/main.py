@@ -1,8 +1,11 @@
 import workouts
 import storage
 import utils
+import database
 
-list=storage.load_workouts()
+
+database.create_table()
+list=database.get_workouts()
 
 def menu():
     print("Menu!")
@@ -12,7 +15,8 @@ def menu():
     print("4. Edytuj trening")
     print("5. Wyszukaj trening")
     print("6. Pokaz statystyki")
-    print("7. Wyjdz")
+    print("7. Usun baze")
+    print("8. Wyjdz")
 
 while True:
     menu()
@@ -33,6 +37,26 @@ while True:
     elif choice == 6:
         workouts.show_stats(list)
     elif choice == 7:
+        database.delete_database()
+    elif choice == 8:
+        workout_id = int(input("Podaj ID treningu: "))
+        workout = database.get_workout_by_id(workout_id)
+        if workout:
+            print(workout)
+        else:
+            print("Nie znaleziono treningu.")
+    elif choice == 7:
+        workout_id = int(input("Podaj ID treningu: "))
+        column = input(
+            "Co chcesz zmienic (cwiczenie/ciezar/powtorzenia/serie): "
+        )
+        value = input("Podaj nowa wartosc: ")
+        database.update_workout(
+            workout_id,
+            column,
+            value
+        )
+    elif choice == 10:
         break
     else:
         print("Nie poprawne.")

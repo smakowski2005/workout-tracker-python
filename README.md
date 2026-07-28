@@ -15,7 +15,7 @@ Data is stored locally in a JSON file.
 - Display workouts
 - Edit workouts
 - Delete workouts
-- Data persistence using JSON
+- Data is stored locally in SQLite database
 - Input validation
 - Modular project structure
 
@@ -24,6 +24,7 @@ Data is stored locally in a JSON file.
 - Python 3
 - JSON
 - Git
+- SQLite
 
 ## Project Structure
 
@@ -50,7 +51,6 @@ python src/main.py
 
 ## Future Improvements
 
-* Add SQLite database
 * Create graphical user interface
 * Add user accounts
 * Create REST API

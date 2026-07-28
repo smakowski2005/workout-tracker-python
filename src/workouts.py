@@ -1,5 +1,6 @@
 import datetime
 
+from src import database
 from utils import get_positive_int
 
 def add_workout(workouts):
@@ -16,21 +17,21 @@ def add_workout(workouts):
         "serie":serie,
         "data": datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     }
-    workouts.append(workout)
+    database.add_workout(workout)
 def show_workouts(workouts):
     if not workouts:
         print("Nie ma takiego treningu.")
         return
     for x,workout in enumerate(workouts,start=1):
         print(
-            f'ID: {workout["id"]}'
+            f'ID: {workout[0]}'
         )
         print(
-            f'{workout["cwiczenie"]} |'
-            f'{workout["ciezar"]} |'
-            f'{workout["powtorzenia"]} |'
-            f'{workout["serie"]} |'
-            f'{workout["data"]} |'
+            f'{workout[1]} |'
+            f'{workout[2]} |'
+            f'{workout[3]} |'
+            f'{workout[4]} |'
+            f'{workout[5]} |'
         )
         print("--------")
 def delete_workout(workouts):
