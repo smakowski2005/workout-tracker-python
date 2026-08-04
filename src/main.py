@@ -16,7 +16,9 @@ def menu():
     print("5. Wyszukaj trening")
     print("6. Pokaz statystyki")
     print("7. Usun baze")
-    print("8. Wyjdz")
+    print("8. Wyszukaj trening po ID")
+    print("9. Zamiana treningu")
+    print("10. Wyjsc")
 
 while True:
     menu()
@@ -45,7 +47,7 @@ while True:
             print(workout)
         else:
             print("Nie znaleziono treningu.")
-    elif choice == 7:
+    elif choice == 9:
         workout_id = int(input("Podaj ID treningu: "))
         column = input(
             "Co chcesz zmienic (cwiczenie/ciezar/powtorzenia/serie): "
