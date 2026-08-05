@@ -10,7 +10,6 @@ def add_workout(workouts):
     powtorzenia=get_positive_int("Powtorzenia: ")
     serie=get_positive_int("Serie: ")
     workout={
-        "id": len(workouts)+1,
         "cwiczenie":cwiczenie,
         "ciezar":ciezar,
         "powtorzenia":powtorzenia,

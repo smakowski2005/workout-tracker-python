@@ -10,7 +10,7 @@ def create_table():
 
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS workouts (
-        id INTEGER NOT NULL PRIMARY KEY,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         cwiczenie TEXT,
         ciezar INTEGER,
         powtorzenia INTEGER,
