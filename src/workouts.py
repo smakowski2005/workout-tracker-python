@@ -1,7 +1,9 @@
 import datetime
 
 from src import database
-from utils import get_positive_int
+from src.utils import get_positive_int
+
+data=datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
 
 def add_workout(workouts):
 
@@ -14,7 +16,7 @@ def add_workout(workouts):
         "ciezar":ciezar,
         "powtorzenia":powtorzenia,
         "serie":serie,
-        "data": datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+        "data": data
     }
     database.add_workout(workout)
 def show_workouts(workouts):
@@ -72,7 +74,7 @@ def edit_workouts(workouts):
             return
 
 
-        workouts[choice]["data"]=datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+        workouts[choice]["data"]=data
         workouts[choice][slowo] = nowy
 def search_workouts(workouts):
     text=input("Wyszukaj po nazwie: ")

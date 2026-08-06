@@ -1,7 +1,7 @@
-import workouts
-import storage
-import utils
-import database
+from src import workouts
+from src import storage
+from src import utils
+from src import database
 
 
 database.create_table()
