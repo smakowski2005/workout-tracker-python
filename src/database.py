@@ -91,3 +91,98 @@ def update_workout(workout_id, column, value):
     )
     conn.commit()
     conn.close()
+def search_workout_by_name(name):
+    conn = connect()
+    cursor = conn.cursor()
+    cursor.execute(
+        """
+        SELECT *
+        FROM workouts
+        WHERE cwiczenie LIKE ?
+        """,
+        (f"%{name}%",)
+    )
+    workout = cursor.fetchall()
+    conn.close()
+    return workout
+
+def search_workout_max_weight(max_weight):
+    conn = connect()
+    cursor = conn.cursor()
+    cursor.execute(
+        """
+        SELECT *
+        FROM workouts
+        WHERE ciezar <= ?
+        """,
+        (max_weight,)
+    )
+    workout = cursor.fetchall()
+    conn.close()
+    return workout
+
+def search_workout_min_weight(min_weight):
+    conn = connect()
+    cursor = conn.cursor()
+    cursor.execute(
+        """
+        SELECT *
+        FROM workouts
+        WHERE ciezar >= ?
+        """,
+        (min_weight,)
+    )
+    workout = cursor.fetchall()
+    conn.close()
+    return workout
+
+def sort_workout_asc():
+    conn = connect()
+    cursor = conn.cursor()
+    cursor.execute(
+        """
+        SELECT * FROM workouts
+        ORDER BY cwiczenie ASC"""
+    )
+    workout = cursor.fetchall()
+    conn.close()
+    return workout
+def sort_workout_desc():
+    conn = connect()
+    cursor = conn.cursor()
+    cursor.execute(
+        """
+        SELECT *
+        FROM workouts
+        ORDER BY cwiczenie DESC"""
+    )
+    workout = cursor.fetchall()
+    conn.close()
+    return workout
+def get_workouts_stats():
+    conn = connect()
+    cursor = conn.cursor()
+    cursor.execute(
+        """
+        SELECT COUNT(id),AVG(ciezar),MAX(ciezar) FROM workouts
+        """
+    )
+    stats = cursor.fetchone()
+    conn.close()
+    return {
+        "workouts": stats[0],
+        "average weight": round(stats[1],2),
+        "max weight": stats[2],
+    }
+
+def get_latest_workout():
+    conn = connect()
+    cursor = conn.cursor()
+    cursor.execute(
+        """
+        SELECT * FROM workouts
+        ORDER BY id DESC LIMIT 1"""
+    )
+    workout = cursor.fetchall()
+    conn.close()
+    return workout

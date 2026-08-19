@@ -3,6 +3,9 @@ from dataclasses import field
 from fastapi import FastAPI,HTTPException
 from src import database, workouts
 from pydantic import BaseModel,Field
+
+from src.database import search_workout_max_weight, search_workout_min_weight
+
 app = FastAPI()
 
 
@@ -17,13 +20,12 @@ def get_workouts():
     return [
         database.get_workouts()
     ]
-@app.get("/workouts/{workout_id}")
+@app.get("/workouts/id/{workout_id}")
 def get_workout(workout_id: int):
-    if workout_id not in workouts:
-        raise HTTPException(status_code=404, detail="Workout not found.")
-    return [
-        database.get_workout_by_id(workout_id)
-    ]
+    all_workouts = database.get_workouts()
+    if any(workout_id == workout[0] for workout in all_workouts):
+        return database.get_workout_by_id(workout_id)
+    raise HTTPException(status_code=404, detail="Workout not found.")
 class Workout(BaseModel):
     cwiczenie: str
     ciezar: int = Field(gt=0)
@@ -43,21 +45,48 @@ def post_workout(workout: Workout):
     return message
 
 
-@app.delete("/workouts/{workout_id}")
+@app.delete("/workouts/id/{workout_id}")
 def delete_workout(workout_id: int):
-    if workout_id not in workouts:
-        raise HTTPException(status_code=404, detail="Workout not found.")
-    return [
-        database.delete_workout(workout_id)
-    ]
-@app.put("/workouts/{workout_id}")
+    all_workouts = database.get_workouts()
+    if any(workout_id == workout[0] for workout in all_workouts):
+        return database.delete_workout(workout_id)
+    raise HTTPException(status_code=404, detail="Workout not found.")
+@app.put("/workouts/id/{workout_id}")
 def put_workout(workout_id: int, column: str, value):
-    if workout_id not in workouts:
-        raise HTTPException(status_code=404, detail="Workout not found.")
-    return [
-        database.update_workout(
-            workout_id,
-            column,
-            value
-        )
-    ]
+    all_workouts = database.get_workouts()
+    if any(workout_id == workout[0] for workout in all_workouts):
+        return [
+            database.update_workout(
+                workout_id,
+                column,
+                value
+            )
+        ]
+    raise HTTPException(status_code=404, detail="Workout not found.")
+
+@app.get("/workouts/search")
+def get_workout(workout_name: str):
+    return database.search_workout_by_name(workout_name)
+
+@app.get("/workouts/filter")
+def get_workout_filter(choose: str,value: int):
+    if choose == "max":
+        return search_workout_max_weight(value)
+    if choose == "min":
+        return search_workout_min_weight(value)
+    raise HTTPException(status_code=404, detail="Workout not found.")
+
+@app.get("/workouts/sort")
+def get_workout_sort(choose: str):
+    if choose == "asc":
+        return database.sort_workout_asc()
+    if choose == "desc":
+        return database.sort_workout_desc()
+    raise HTTPException(status_code=404, detail="Workout not found.")
+
+@app.get("/workouts/stats")
+def get_workout_stats():
+    return database.get_workouts_stats()
+@app.get("/workouts/latest")
+def get_latest_workout():
+    return database.get_latest_workout()

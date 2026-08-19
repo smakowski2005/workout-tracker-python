@@ -18,7 +18,8 @@ def menu():
     print("7. Usun baze")
     print("8. Wyszukaj trening po ID")
     print("9. Zamiana treningu")
-    print("10. Wyjsc")
+    print("10. Wyszukaj trening po nazwie")
+    print("11. Wyjsc")
 
 while True:
     menu()
@@ -59,6 +60,9 @@ while True:
             value
         )
     elif choice == 10:
+        workout_name = input("Podaj nazwe cwiczenia: ")
+        database.search_workout_by_name(workout_name)
+    elif choice == 11:
         break
     else:
         print("Nie poprawne.")
